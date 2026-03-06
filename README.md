@@ -1,26 +1,68 @@
 # Assembly Line Maintenance --- Fullstack Demo
 
-Interactive maintenance dashboard with **3D station visualization**,
+Interactive maintenance dashboard with **3D station visualization**,  
 **role-based access**, and **offline-capable workflows**.
 
-This project demonstrates a full-stack architecture using
-**React**, **Three.js**, **Express**, and **PostgreSQL**, including an
-automatic fallback to a seeded offline database so the project runs even
-without external infrastructure.
+This project demonstrates a full-stack architecture built with  
+**React**, **React Three Fiber**, **Express**, and **PostgreSQL**.
+
+The system supports resilient operation through:
+
+- automatic **fallback to a seeded PostgreSQL database** for authentication
+- **IndexedDB (Dexie) draft storage** when the API or live database is unavailable
+
+This allows the application to remain usable even when external
+infrastructure is temporarily offline.
 
 ------------------------------------------------------------------------
 
+# Screenshots
+
+## Station Overview
+![Station Overview](docs/overview.png)
+
+## Highlighting subassembly activates partform report
+![Highlighting subassembly](docs/highlighting.png)
+
+## Issue Reporting Form
+![Issue Form](docs/partform.png)
+
+## Partform saved
+![Issue Form](docs/saved_form.png)
+
+## Partform submitted
+![Issue Form](docs/form_submit.png)
+
+
+------------------------------------------------------------------------
+
+# Small system architecture
+
+Frontend (React + Three.js)
+        |
+        v
+   Express API
+        |
+   PostgreSQL
+   /        \
+Live DB    Offline Seeded DB
+        |
+     Dexie
+
+
+------------------------------------------------------------------------     
+
 # Features
 
--   Authentication (register/login)
--   Persistent login using React Context + localStorage
--   Role-based station access
--   Interactive 3D station viewer (React Three Fiber)
--   Issue reporting workflow
--   Draft persistence via IndexedDB (Dexie)
--   Docker seeded database for offline demo
--   Express API with PostgreSQL Pool
--   Vite + Tailwind frontend setup
+- Authentication (register/login)
+- Persistent login state using Zustand + localStorage
+- Role-based station access
+- Interactive 3D station viewer (React Three Fiber)
+- Issue reporting workflow
+- Draft persistence via IndexedDB (Dexie)
+- Docker seeded database for offline auth fallback
+- Express API with PostgreSQL
+- Vite + Tailwind frontend
 
 ------------------------------------------------------------------------
 
@@ -131,18 +173,18 @@ http://localhost:5173
 | -  | -               | -        | -      |
 | 1  | user1@demo.com  |   1234   | ST-10  |
 | 2  | user2@demo.com  |   1234   | ST-20  |
-| 3  | admin@demo.com  |   1234   | ST-10  |
-| 4  | admin@demo.com  |   1234   | ST-20  |
+| 3  | admin@demo.com  |   1234   |  all   |
+
 
 ------------------------------------------------------------------------
 
 # Authentication Flow
 
-1.  User logs in via React form
-2.  Express verifies password using bcrypt
-3.  Server returns: { id, email, access }
-4.  AuthContext stores user in state
-5.  localStorage persists login between refreshes
+1. User logs in via React form
+2. Express verifies password using bcrypt
+3. Server returns user profile and allowed station access
+4. Zustand store persists login state
+5. localStorage restores session after refresh
 
 ------------------------------------------------------------------------
 
