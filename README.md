@@ -11,32 +11,44 @@ The system supports resilient operation through:
 - automatic **fallback to a seeded PostgreSQL database** for authentication
 - **IndexedDB (Dexie) draft storage** when the API or live database is unavailable
 
-This allows the application to remain usable even when external
-infrastructure is temporarily offline.
+This allows the application to remain usable even when the API or live database is 
+temporarily unavailable.
+
 
 ------------------------------------------------------------------------
 
-# Screenshots
+## Quick Demo
 
-## Station Overview
+1. Start backend
+2. Start frontend
+3. Login using demo account
+4. Open a station and report an issue
+
+If the live database is unavailable, issue drafts are automatically stored locally using IndexedDB (Dexie).
+
+------------------------------------------------------------------------
+
+## Screenshots
+
+# Station Overview
 ![Station Overview](docs/overview.png)
 
-## Highlighting subassembly activates partform report
+# Highlighting subassembly activates partform report
 ![Highlighting subassembly](docs/highlighting.png)
 
-## Issue Reporting Form
+# Issue Reporting Form
 ![Issue Form](docs/partform.png)
 
-## Partform saved
+# Partform saved
 ![Issue Form](docs/saved_form.png)
 
-## Partform submitted
+# Partform submitted
 ![Issue Form](docs/form_submit.png)
 
 
 ------------------------------------------------------------------------
 
-# Small system architecture
+## System architecture
 
 ```
 Frontend (React + Three.js)
@@ -107,9 +119,9 @@ Used when live DB is not available.
 
 Server startup logic:
 
-Try LIVE DB connection -> If failed -> switch to OFFLINE seeded DB
-
-This ensures you can run this project without any setup.
+1. Attempt connection to **Live PostgreSQL (5432)**
+2. If the connection fails, switch to **Offline Seeded PostgreSQL (Docker, 5433)**
+3. Authentication continues working even when the live database is unavailable
 
 ------------------------------------------------------------------------
 
@@ -170,11 +182,11 @@ http://localhost:5173
 
 # Demo Accounts
 
-| id |      email      | password | access |
-| -  | -               | -        | -      |
-| 1  | user1@demo.com  |   1234   | ST-10  |
-| 2  | user2@demo.com  |   1234   | ST-20  |
-| 3  | admin@demo.com  |   1234   |  all   |
+| id |     email       | password |     access     |
+| -  |       -         |    -     |       -        |
+| 1  | user1@demo.com  |   1234   |     ST-10      |
+| 2  | user2@demo.com  |   1234   |     ST-20      |
+| 3  | admin@demo.com  |   1234   |  All stations  |
 
 
 ------------------------------------------------------------------------
