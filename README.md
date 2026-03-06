@@ -38,6 +38,7 @@ infrastructure is temporarily offline.
 
 # Small system architecture
 
+```
 Frontend (React + Three.js)
         |
         v
@@ -49,7 +50,7 @@ Live DB    Offline Seeded DB
         |
      Dexie
 
-
+```
 ------------------------------------------------------------------------     
 
 # Features
