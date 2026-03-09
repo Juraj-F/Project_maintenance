@@ -46,7 +46,17 @@ async function pingLiveDb() {
   }
 }
 
+async function pingOfflineDb() {
+  try {
+    await offlineDb.query("SELECT 1");
+    console.log("✅ OFFLINE seeded DB reachable");
+  } catch (err) {
+    console.warn("⚠️ OFFLINE seeded DB unreachable");
+  }
+}
+
 // Boot + keep checking so it can recover when live comes back
+await pingOfflineDb();
 await pingLiveDb();
 setInterval(pingLiveDb, 10_000);
 
@@ -56,6 +66,7 @@ async function getAuthDb() {
 
   try {
     await offlineDb.query("SELECT 1");
+    console.log("✅ Connected to OFFLINE seeded DB");
     return offlineDb;
   } catch {
     return null;
@@ -184,7 +195,7 @@ app.post("/api/issues", async (req, res) => {
   }
 
   try {
-    const exists = await liveDb.query("SELECT 1 FROM issues WHERE partid=$1", [partId]);
+    const exists = await liveDb.query("SELECT 1 FROM issues WHERE partid=$1 AND status='open'", [partId]);
 
     if (exists.rows.length > 0) {
       return res.status(409).json({
@@ -221,7 +232,7 @@ app.get("/api/issues/forms", async (req, res) => {
   }
 
   try {
-    // NOTE: use stationid (lowercase) as in your existing rows
+   
     const result = await liveDb.query("SELECT * FROM issues WHERE stationid=$1", [stationId]);
 
     return res.status(200).json({
@@ -229,7 +240,7 @@ app.get("/api/issues/forms", async (req, res) => {
       issues: result.rows || [],
     });
   } catch (err) {
-    console.error("GET /api/issues/cisla:", err);
+    console.error("GET /api/issues/forms:", err);
     return res.status(503).json({ ok: false, error: "Live database unreachable" });
   }
 });
@@ -253,6 +264,33 @@ app.post("/api/drafts/export", async (req, res) => {
 
   return res.json({ ok: true });
 });
+
+// beginning of admin section
+
+app.get("/api/issues/allforms", async (req, res) => {
+  if (!requireLiveDb(res)) return;
+
+// Checking the role admin 
+  const role = String(req.headers["x-role"] || "").toLowerCase();
+
+  if (role !== "admin") {
+    return res.status(403).json({ ok: false, error: "Admin access required" });
+  }
+
+  try {
+   
+    const result = await liveDb.query("SELECT * FROM issues");
+
+    return res.status(200).json({
+      ok: true,
+      issues: result.rows || [],
+    });
+  } catch (err) {
+    console.error("GET /api/issues/allforms:", err);
+    return res.status(503).json({ ok: false, error: "Live database unreachable" });
+  }
+});
+
 
 // server started messages
 app.listen(port, () => {

@@ -149,7 +149,7 @@ try {
     onSentIssues?.(partId)
     localStorage.removeItem(storageKey);
     setHasLocalDraft(false)
-    
+    setDataFromDb(true)
     console.log("Submitted to server");
     return data.issue ?? data;
 
@@ -162,11 +162,13 @@ try {
       ...form,
       submittedAt: Date.now(),
       submittedBy: user.user.email,
+      status: "closed"
     });
     onPendingSaved?.(partId)
     setHasLocalDraft(false)
     localStorage.removeItem(storageKey)
     console.log("Submitted to Dexie");
+    setDataFromDb(true)
     return null;
   }}
 

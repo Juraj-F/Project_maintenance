@@ -63,13 +63,18 @@ useEffect(() => {
         try{
       const drafts=(await db.drafts.toArray())
 
-      const dexieSent = new Set( drafts.map(item => String(item.partId)))
+      const dexieSent = new Set( drafts.map(item => {
+        console.log("status",item.status)
+        const statusOpen=item.status
+        if(statusOpen!=="open") return;
+        return String(item.partId);
+      }))
 
       setSentIssuesToDexie(dexieSent)
 
       } catch (err){ 
       console.error("Dexie error:", err)
-      // optional: reset on error
+      // reset on error
       setSentIssuesToLiveDb(new Set())
       setSentIssuesToDexie(new Set());   
       } 
