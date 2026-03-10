@@ -72,8 +72,21 @@ export default function Navbar() {
           </div>
 
           {/* Right side */}
+
+
           <div className="relative flex items-center justify-end gap-4" ref={menuRef}>
             {/* Desktop actions */}
+            {user?.user?.role==="admin" && 
+              <>
+                <button
+                  className="hidden lg:block text-gray-300 hover:text-white text-sm bg-amber-600/50 rounded-2xl px-2"
+                  onClick={()=>go(`/admin/${user.user.role}`)}
+                >
+                  Admin Dashboard
+                </button>
+              </>
+            }
+
             {user ? (
               <>
                 <span className="hidden lg:block text-gray-300 text-sm">
@@ -115,13 +128,25 @@ export default function Navbar() {
 
             {/* Mobile dropdown */}
             {mobileOpen && (
-              <div className="lg:hidden absolute right-0 top-full mt-2 w-56 rounded-xl bg-slate-900/90 backdrop-blur border border-white/10 shadow-xl overflow-hidden">
+            <div className="lg:hidden absolute right-0 top-full mt-2 w-56 rounded-xl bg-slate-900/90 backdrop-blur border border-white/10 shadow-xl overflow-hidden">
+
                 {user ? (
                   <>
                     <div className="px-4 py-3 border-b border-white/10">
                       <div className="text-xs text-gray-400">Signed in as</div>
                       <div className="text-sm text-amber-200 truncate">{email}</div>
                     </div>
+
+            {user?.user?.role==="admin" && 
+              <>
+                <button
+                  className="w-full text-left px-4 py-3 text-sm text-gray-200 hover:bg-white/5"
+                  onClick={()=>go(`/admin/${user.user.role}`)}
+                >
+                  Admin Dashboard
+                </button>
+              </>
+            }
 
                     <button
                       className="w-full text-left px-4 py-3 text-sm text-gray-200 hover:bg-white/5"

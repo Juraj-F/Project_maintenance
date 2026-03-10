@@ -162,7 +162,7 @@ try {
       ...form,
       submittedAt: Date.now(),
       submittedBy: user.user.email,
-      status: "closed"
+      status: "open"
     });
     onPendingSaved?.(partId)
     setHasLocalDraft(false)

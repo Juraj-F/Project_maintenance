@@ -5,6 +5,7 @@ import AssemblyLine from "@/pages/Assembly_line"
 import StationPage from "@/pages/StationPage"
 import Login from "@/pages/Login"
 import Register from "@/pages/Register"
+import AdminDashboard from "./pages/AdminDashboard"
 
 function App() {
   return(
@@ -20,6 +21,7 @@ function App() {
         <Route path="/:id" element={<StationPage/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/register" element={<Register />}/>
+        <Route path="/admin/:adminUser" element={<AdminDashboard/>}/>
         </Routes>
         </main>
 

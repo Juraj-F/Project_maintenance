@@ -265,7 +265,7 @@ app.post("/api/drafts/export", async (req, res) => {
   return res.json({ ok: true });
 });
 
-// beginning of admin section
+// beginning of admin dashboard section
 
 app.get("/api/issues/allforms", async (req, res) => {
   if (!requireLiveDb(res)) return;
@@ -280,6 +280,7 @@ app.get("/api/issues/allforms", async (req, res) => {
   try {
    
     const result = await liveDb.query("SELECT * FROM issues");
+    console.log("alldata",result)
 
     return res.status(200).json({
       ok: true,
