@@ -4,6 +4,15 @@ import express from "express";
 import bcrypt from "bcrypt";
 import pg from "pg";
 import fs from "fs";
+import cors from "cors"
+
+app.use(cors({
+  origin:[
+    "http://localhost:5173",
+    "https://YOUR_VERCEL_DOMAIN.vercel.app"
+  ],
+  credentials: true
+}))
 
 const app = express();
 const port = process.env.PORT || 3001;
