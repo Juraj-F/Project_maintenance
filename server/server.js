@@ -9,7 +9,7 @@ import cors from "cors"
 app.use(cors({
   origin:[
     "http://localhost:5173",
-    "https://YOUR_VERCEL_DOMAIN.vercel.app"
+    "https://project-maintenance-drab.vercel.app"
   ],
   credentials: true
 }))
