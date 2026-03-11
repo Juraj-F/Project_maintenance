@@ -15,7 +15,8 @@ export default function AdminDashboard() {
   const [hovered, setHovered] = useState(null);
   const [selectedPart, setSelectedPart] = useState(null);
   const [showCancelCaution, setShowCancelCaution] = useState(false);
-  const [BomItems, setBomItems] = useState([])
+  const [bomItems, setBomItems] = useState([])
+
   
   // tracks ALL sent drafts to live Db(reactive)
   const [sentIssuesToLiveDb, setSentIssuesToLiveDb] = useState(() => new Set());
@@ -42,9 +43,9 @@ export default function AdminDashboard() {
 
 
 
-// gathering all sent issues from live DB
+// gathering all sent issues IDs from live DB
 // if online db unreachable 
-// gathering all sent issues from offline DB
+// gathering all sent issues IDs from offline DB
 useEffect(() => {
   (async () => {
     try {
@@ -79,18 +80,10 @@ useEffect(() => {
   
 // gathering BOMtable data
   useEffect(()=>{ 
-    (async () => {
+    const loadDrafts = async () => {
       const drafts=await db.drafts.toArray()
-      const items=drafts.map(({ partId, criticality, status, submittedAt}) => ({
-        partId,
-        criticality,
-        status,
-        submittedAt,
-      })
-    )
-  // console.log("drafts from admin page",drafts)
-  setBomItems(items); 
-})()
+    setBomItems(drafts)}
+  loadDrafts(); 
 },[adminUser]);
 
 
@@ -98,8 +91,10 @@ const assys = useMemo(()=>{
   const assemblyMap=Object.fromEntries(
   Object.values(StationAssemblies).flat().map((item)=> [item.id, item])
 );
-return BomItems.map((item)=> {
+
+return bomItems.map((item)=> {
   const assembly = assemblyMap[item.partId];
+
   return{
     rowId: item.partId,
     partId: item.partId,
@@ -110,8 +105,9 @@ return BomItems.map((item)=> {
     submittedAt: item.submittedAt || null,
   }
 })
-},[BomItems])
+},[bomItems])
 
+console.log("data from bomItems" ,assys)
 
   // Row click handler
   const clicked = (itemid) => {
@@ -119,6 +115,80 @@ return BomItems.map((item)=> {
     setShowCancelCaution(false);
     setCancelMode(null);
   };
+
+  const handleDelete = async (itemid) =>{
+    const idData = await db.drafts.get(itemid)
+    if(!idData) return console.log("No records for this ID");
+    if(idData.status==="deleted") 
+      return console.log("Status already set to deleted for this ID");
+    await db.drafts.update(itemid, {
+      status:"deleted",
+      deletedAt: Date.now(),
+      deletedBy:user.user.email
+    })
+    // state update
+    setBomItems((prev)=>
+    prev.map((item)=>
+      item.partId===itemid ? {...item, status:"deleted"} : item
+  
+  ))
+  }
+
+    const handleRecall = async (itemid) =>{
+    const idData = await db.drafts.get(itemid)
+    if(!idData) return console.log("No records for this ID");
+    if(idData.status!=="deleted") 
+      return console.log("This ID was not deleted so it can't be recalled");
+    await db.drafts.update(itemid, {
+      status:"open",
+      recalledAt: Date.now(),
+      recalledBy:user.user.email
+    })
+    // state update
+    setBomItems((prev)=>
+    prev.map((item)=>
+      item.partId===itemid ? {...item, status:"open"} : item
+  
+  ))
+  }
+
+      const handleReopen = async (itemid) =>{
+    const idData = await db.drafts.get(itemid)
+    if(!idData) return console.log("No records for this ID");
+    if(idData.status==="deleted" || idData==="open") 
+      return console.log("Status already set to open or deleted for this ID");
+    await db.drafts.update(itemid, {
+      status:"open",
+      deletedAt: Date.now(),
+      deletedBy:user.user.email
+    })
+    // state update
+    setBomItems((prev)=>
+    prev.map((item)=>
+      item.partId===itemid ? {...item, status:"open"} : item
+  
+  ))
+  }
+
+    const handleClose = async (itemid) =>{
+    const idData = await db.drafts.get(itemid)
+    if(!idData) return console.log("No records for this ID");
+    if(idData.status==="close" || idData.status==="delete") 
+      return console.log("Status already set to close or deleted for this ID");
+    await db.drafts.update(itemid, {
+      status:"close",
+      deletedAt: Date.now(),
+      deletedBy:user.user.email
+    })
+    // state update
+    setBomItems((prev)=>
+    prev.map((item)=>
+      item.partId===itemid ? {...item, status:"close"} : item
+  
+  ))
+  }
+
+console.log("bomItems from admin page",bomItems)
 
   // Cancel button pressed inside PartForm
   // Decide WHICH popup to show immediately
@@ -175,9 +245,12 @@ return BomItems.map((item)=> {
             hoveredId={hovered}
             onRowHover={setHovered}
             items={assys}
+            updatedItems={bomItems}
             partForm={clicked}
             savedDrafts={savedDrafts}
             isAdmin={adminUser}
+            onDelete={handleDelete}
+            onRecall={handleRecall}
           />
         </div>
       </div>
