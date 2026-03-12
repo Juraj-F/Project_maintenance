@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useAuthStore } from "../stores/authStore";
+import { API_URL } from "../lib/api";
 
 export default function Login() {
   const navigate = useNavigate()
@@ -11,6 +12,7 @@ export default function Login() {
   const loginToStore = useAuthStore((s) => s.login)
 
   async function loginData({email, password}) {
+  console.log("LOGIN URL:", `${API_URL}/api/login`);
   const res = await fetch(`${API_URL}/api/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -29,7 +31,7 @@ async function handleLogin(e){
   setIsLoading(true)
 
   if(!email.includes("@")){
-    setError("Email must contain `@` ")
+    setError("Email must contain @ ")
     return
   }
 
