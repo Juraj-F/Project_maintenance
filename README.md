@@ -17,14 +17,19 @@ temporarily unavailable.
 
 ------------------------------------------------------------------------
 
-## Quick Demo
+# Live Demo
 
-1. Start backend
-2. Start frontend
-3. Login using demo account
-4. Open a station and report an issue
+Frontend (Vercel)
 
-If the live database is unavailable, issue drafts are automatically stored locally using IndexedDB (Dexie).
+https://project-maintenance-drab.vercel.app
+
+Backend API (Render)
+
+https://project-maintenance.onrender.com
+
+Database
+
+Neon PostgreSQL
 
 ------------------------------------------------------------------------
 
@@ -67,15 +72,69 @@ Live DB    Offline Seeded DB
 
 # Features
 
-- Authentication (register/login)
-- Persistent login state using Zustand + localStorage
-- Role-based station access
-- Interactive 3D station viewer (React Three Fiber)
-- Issue reporting workflow
-- Draft persistence via IndexedDB (Dexie)
-- Docker seeded database for offline auth fallback
-- Express API with PostgreSQL
-- Vite + Tailwind frontend
+## Authentication
+
+-   User registration
+-   Secure login using **bcrypt password hashing**
+-   Role-based access control
+-   Persistent login using **Zustand + localStorage**
+
+## Station Visualization
+
+-   Interactive **3D assembly line viewer**
+-   Built using **React Three Fiber**
+-   Hover highlighting of assemblies
+-   Clickable assemblies open issue reporting form
+
+## Issue Reporting
+
+Users can report technical issues directly from the 3D station
+interface.
+
+Issue report includes:
+
+-   assembly ID
+-   criticality level
+-   description
+-   user email
+-   station reference
+
+Submitted issues are stored in **PostgreSQL**.
+
+## Draft Persistence (Offline Mode)
+
+If the API or live database is unavailable:
+
+-   Issue drafts are automatically saved to **IndexedDB (Dexie)**
+-   Drafts persist between sessions
+-   Drafts can later be exported via API
+
+```bash
+    User submits issue   
+          ↓ 
+    API reachable? 
+        /    \
+      YES     NO 
+       ↓      ↓ 
+    Neon DB   Dexie Draft
+```
+
+## Admin Dashboard
+
+Administrators have access to a simple issue management dashboard.
+
+Features:
+
+-   view all reported issues
+-   soft delete issues
+-   recall deleted issues
+-   monitor issue lifecycle
+
+Issue statuses:
+
+open deleted
+
+Soft deletion ensures issue history remains preserved.
 
 ------------------------------------------------------------------------
 
@@ -102,6 +161,13 @@ Live DB    Offline Seeded DB
 -   PostgreSQL (Live database)
 -   Docker Seeded PostgreSQL (Offline fallback)
 -   IndexedDB drafts (Dexie)
+
+## Infrastructure / Deployment
+
+Frontend: Vercel\
+Backend: Render\
+Database: Neon PostgreSQL\
+Offline DB: Docker PostgreSQL
 
 ------------------------------------------------------------------------
 
@@ -250,6 +316,5 @@ Junior Fullstack Portfolio Project --- Assembly Line Maintenance System
 
 -   JWT authentication
 -   3D performance optimization
--   Issue dashboard
 -   Drafts synchronization between offline and online databases when
     online database is available
