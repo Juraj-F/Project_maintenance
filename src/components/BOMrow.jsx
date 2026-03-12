@@ -15,12 +15,11 @@ export default function BOMrow({
   itemStatus,
   itemDate,
   deleteClicked,
-  recallClicked,
-  itemsToUse
+  recallClicked
 }) {
 
 
-  console.log("itemsToUse", itemsToUse)
+  // console.log("itemsToUse", itemsToUse)
 
     const adminLogged = isAdmin === "admin";
     const isStatusOpen = itemStatus === "open";

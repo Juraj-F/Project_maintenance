@@ -88,17 +88,22 @@ useEffect(() => {
 
 
 const assys = useMemo(()=>{ 
+
   const assemblyMap=Object.fromEntries(
   Object.values(StationAssemblies).flat().map((item)=> [item.id, item])
 );
+console.log("bomitems", bomItems)
 
 return bomItems.map((item)=> {
   const assembly = assemblyMap[item.partId];
 
+  console.log("assembly label", assembly.label)
+   console.log("partId", item.partId)
+
   return{
     rowId: item.partId,
     partId: item.partId,
-    name: assembly?.Model?.name || item.partId,
+    name: assembly.label,
     qty: assembly?.qty || "0",
     criticality: item.criticality || "-",
     status: item.status || "-",
@@ -152,6 +157,9 @@ console.log("data from bomItems" ,assys)
   ))
   }
 
+// -----------------------------      START     -----------------------------
+// ----------------------------- TO BE IMPLEMENTED -----------------------------
+
       const handleReopen = async (itemid) =>{
     const idData = await db.drafts.get(itemid)
     if(!idData) return console.log("No records for this ID");
@@ -188,7 +196,11 @@ console.log("data from bomItems" ,assys)
   ))
   }
 
-console.log("bomItems from admin page",bomItems)
+  // -----------------------------      END     -----------------------------
+// ----------------------------- TO BE IMPLEMENTED -----------------------------
+
+
+console.log("bomItems from admin page ASSYS",assys)
 
   // Cancel button pressed inside PartForm
   // Decide WHICH popup to show immediately
@@ -245,7 +257,6 @@ console.log("bomItems from admin page",bomItems)
             hoveredId={hovered}
             onRowHover={setHovered}
             items={assys}
-            updatedItems={bomItems}
             partForm={clicked}
             savedDrafts={savedDrafts}
             isAdmin={adminUser}

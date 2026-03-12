@@ -1,9 +1,8 @@
 import BOMrow from "./BOMrow";
 
-export default function BOMTable({items,onDelete, updatedItems, onRecall, isAdmin, selectedId, savedDrafts, sentIssuesToLiveDb, sentIssuesToDexie, hoveredId, onRowHover, partForm, className=""}){
+export default function BOMTable({items, onDelete, onRecall, isAdmin, selectedId, savedDrafts, sentIssuesToLiveDb, sentIssuesToDexie, hoveredId, onRowHover, partForm, className=""}){
     const adminLogged = isAdmin==="admin"
 
- 
     return(
       <div className="overflow-hidden w-full">
       <div className={`bg-slate-700/90 rounded-xl pt-5 px-8 h-full w-full ${className} border-2`}>
@@ -44,7 +43,6 @@ export default function BOMTable({items,onDelete, updatedItems, onRecall, isAdmi
         mouseOut={()=>onRowHover?.(null)}
         deleteClicked={()=>onDelete?.(item.partId)}
         recallClicked={()=>onRecall?.(item.partId)}
-        itemsToUse={updatedItems}
         isAdmin={isAdmin}
         />) 
         
@@ -54,7 +52,7 @@ export default function BOMTable({items,onDelete, updatedItems, onRecall, isAdmi
         className={`${selectedId===item.id ? "bg-yellow-500/20" : ""} grid grid-cols-6 font-semibold border-b pb-2 mb-2 w-full text-center`}
         key={item.id}
         itemNo={item.id}
-        itemName={item.Model?.name?.toString()}
+        itemName={item.label}
         itemQty={item.qty}
         isHovered={hoveredId===item.id}
         mouseOver={()=>onRowHover?.(item.id)}

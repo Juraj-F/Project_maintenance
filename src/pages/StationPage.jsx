@@ -7,6 +7,7 @@ import CancelCaution from "@/components/CancelCaution";
 import { useParams } from "react-router-dom";
 import { useAuthStore } from "@/stores/authStore";
 import { db } from "../db/draftsDB";
+import { API_URL } from "../lib/api";
 
 const DRAFT_PREFIX = "draft:";
 
@@ -84,8 +85,9 @@ useEffect(() => {
 // gathering BOMtable data
   const Assemblies = StationAssemblies[id] ?? [];
   const BOMitems = useMemo(
-    () => Assemblies.map(({ id, Model, qty }) => ({
+    () => Assemblies.map(({ id, Model, qty, label }) => ({
         id,
+        label,
         Model,
         qty,
       })),

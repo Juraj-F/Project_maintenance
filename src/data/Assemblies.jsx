@@ -22,31 +22,31 @@ import {SealingDosageControl} from "@/three/SealingDosageControl"
 
 const Assemblies_ST10 = [
  
-  { id: "IAM-1001", Model:LoadStFrame, qty:"1"},
-  { id: "IAM-1002", Model:ConvCarrier, qty:"1"},
-  { id: "IAM-1003", Model:Conv_L, qty:"1"},
-  { id: "IAM-1004", Model:Conv_R, qty:"1"},
-  { id: "IAM-1005", Model:Conv_static, qty:"1"},
-  { id: "IAM-1006", Model:ConvCarrier_R, qty:"1"},
-  { id: "IAM-1007", Model:EnChain, qty:"1"},
-  { id: "IAM-1008", Model:PilotV, qty:"1"},
-  { id: "IAM-1009", Model:VTerminal, qty:"1"},
-  { id: "IAM-1010", Model:Carrier_Vertical, qty:"1"}
+  { id: "IAM-1001", label: "Load Station Frame", Model:LoadStFrame, qty:"1"},
+  { id: "IAM-1002", label: "Conveyor Carrier", Model:ConvCarrier, qty:"1"},
+  { id: "IAM-1003", label: "Conveyor Module Left", Model:Conv_L, qty:"1"},
+  { id: "IAM-1004", label: "Conveyor Module Right",Model:Conv_R, qty:"1"},
+  { id: "IAM-1005", label: "Conveyor Static", Model:Conv_static, qty:"1"},
+  { id: "IAM-1006", label: "Conveyor Carrier Right", Model:ConvCarrier_R, qty:"1"},
+  { id: "IAM-1007", label: "Energo Chain", Model:EnChain, qty:"1"},
+  { id: "IAM-1008", label: "Pilot Valve", Model:PilotV, qty:"1"},
+  { id: "IAM-1009", label: "Valve Terminal", Model:VTerminal, qty:"1"},
+  { id: "IAM-1010", label: "Carrier Vertical", Model:Carrier_Vertical, qty:"1"}
 
 ]
 
 const Assemblies_ST20 = [
  
-  { id: "IAM-2001", Model:ApplicatorHead, qty:"1"},
-  { id: "IAM-2002", Model:PortalConstruction, qty:"1"},
-  { id: "IAM-2003", Model:ApplicatorHeating, qty:"1"},
-  { id: "IAM-2004", Model:Portal, qty:"1"},
-  { id: "IAM-2005", Model:ProductNest, qty:"1"},
-  { id: "IAM-2006", Model:SealingDosageControl, qty:"1"},
-  { id: "IAM-2007", Model:ServoXaxis, qty:"1"},
-  { id: "IAM-2008", Model:ServoYaxis, qty:"1"},
-  { id: "IAM-2009", Model:ServoZaxis, qty:"1"},
-  { id: "IAM-2010", Model:ConnectorHub, qty:"1"}
+  { id: "IAM-2001", label: "Applicatior Head", Model:ApplicatorHead, qty:"1"},
+  { id: "IAM-2002", label: "Portal Construction", Model:PortalConstruction, qty:"1"},
+  { id: "IAM-2003", label: "Applicator Heating", Model:ApplicatorHeating, qty:"1"},
+  { id: "IAM-2004", label: "Portal Mechanism", Model:Portal, qty:"1"},
+  { id: "IAM-2005", label: "Product Nest", Model:ProductNest, qty:"1"},
+  { id: "IAM-2006", label: "Sealing Dosage Control", Model:SealingDosageControl, qty:"1"},
+  { id: "IAM-2007", label: "Servo Motor X-axis", Model:ServoXaxis, qty:"1"},
+  { id: "IAM-2008", label: "Servo Motor Y-axis", Model:ServoYaxis, qty:"1"},
+  { id: "IAM-2009", label: "Servo Motor Z-axis", Model:ServoZaxis, qty:"1"},
+  { id: "IAM-2010", label: "Connector Hub", Model:ConnectorHub, qty:"1"}
 
 ]
 
