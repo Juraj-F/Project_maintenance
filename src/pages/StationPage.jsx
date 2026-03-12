@@ -178,7 +178,7 @@ useEffect(() => {
             partId={selectedPart}
             onCancel={handleCancel}
             exportEnabled={canExport}
-             onPendingSaved={(pid) => {
+            onPendingSaved={(pid) => {
     setSentIssuesToDexie(prev => {
       const next = new Set(prev);
       next.add(String(pid));
@@ -193,7 +193,7 @@ useEffect(() => {
                 return next;
               });
             }}
-            onSentIssuesToLiveDb={(id) => {
+            onSentIssues={(id) => {
               // ⭐ Update Set immediately when user presses SAVE
               setSentIssuesToLiveDb((prev) => {
                 const next = new Set(prev);
