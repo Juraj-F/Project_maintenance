@@ -217,13 +217,13 @@ app.post("/api/issues", async (req, res) => {
     }
 
     await liveDb.query(
-      "INSERT INTO issues (stationid, partid, criticality, description, createdbyuserid, email) VALUES ($1, $2, $3, $4, $5, $6)",
-      [stationId, partId, criticality, description, userid, email]
+      "INSERT INTO issues (stationid, partid, criticality, description, createdbyuserid) VALUES ($1, $2, $3, $4, $5)",
+      [stationId, partId, criticality, description, userid]
     );
 
     return res.json({
       ok: true,
-      issue: { partId, stationId, email, criticality, description },
+      issue: { partId, stationId, criticality, description, userid },
     });
   } catch (err) {
     console.error("POST /api/issues error:", err, partId);
