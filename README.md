@@ -51,23 +51,6 @@ Neon PostgreSQL
 ![Issue Form](docs/form_submit.png)
 
 
-------------------------------------------------------------------------
-
-## System architecture
-
-```
-Frontend (React + Three.js)
-        |
-        v
-   Express API
-        |
-   PostgreSQL
-   /        \
-Live DB    Offline Seeded DB
-        |
-     Dexie
-
-```
 ------------------------------------------------------------------------     
 
 # Features
