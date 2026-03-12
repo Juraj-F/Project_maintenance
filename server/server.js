@@ -6,6 +6,9 @@ import pg from "pg";
 import fs from "fs";
 import cors from "cors"
 
+
+const app = express();
+
 app.use(cors({
   origin:[
     "http://localhost:5173",
@@ -13,7 +16,7 @@ app.use(cors({
   credentials: true
 }))
 
-const app = express();
+
 const port = process.env.PORT || 3001;
 const hashRounds = 10;
 
