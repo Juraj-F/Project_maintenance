@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { db } from "../db/draftsDB";
 import { useAuthStore } from "../stores/authStore";
 import { useParams } from "react-router-dom";
+import { API_URL } from "../lib/api";
 
 
 export default function PartForm({ partId, onCancel, onDraftSaved, onSentIssues, exportEnabled, onPendingSaved }) {
@@ -62,7 +63,7 @@ useEffect(() => {
 
     //  try online issues
     try {
-      const res = await fetch(`/api/issues/forms?stationId=${id}`);
+      const res = await fetch(`${API_URL}/api/issues/forms?stationId=${id}`);
       const data = await res.json();
       if (!res.ok || !data.ok) throw new Error();
 
@@ -129,7 +130,7 @@ useEffect(() => {
 
 try {
   // sending the data to the online database 
-    const res = await fetch("/api/issues", {
+    const res = await fetch(`${API_URL}/api/issues`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -183,7 +184,7 @@ try {
       }
 
 try{
-    const res = await fetch("/api/drafts/export", {
+    const res = await fetch(`${API_URL}/api/drafts/export`, {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-role": user?.user?.role || "" },
       body: JSON.stringify({ drafts }),

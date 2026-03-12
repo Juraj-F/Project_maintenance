@@ -13,7 +13,7 @@ export default function Register() {
 
 // Connection to the db server
   async function register(email, password) {
-    const res = await fetch("/api/register", {
+    const res = await fetch(`${API_URL}/api/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),

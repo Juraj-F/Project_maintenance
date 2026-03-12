@@ -11,7 +11,7 @@ export default function Login() {
   const loginToStore = useAuthStore((s) => s.login)
 
   async function loginData({email, password}) {
-  const res = await fetch("/api/login", {
+  const res = await fetch(`${API_URL}/api/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, password }),

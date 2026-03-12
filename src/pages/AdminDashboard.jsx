@@ -49,7 +49,7 @@ export default function AdminDashboard() {
 useEffect(() => {
   (async () => {
     try {
-      const res = await fetch(`/api/issues/allforms`);
+      const res = await fetch(`${API_URL}/api/issues/allforms`);
       const data = await res.json();
 
       if (!res.ok || data?.ok !== true || !Array.isArray(data?.issues)) {

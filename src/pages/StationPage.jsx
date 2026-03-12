@@ -48,7 +48,7 @@ export default function StationPage() {
 useEffect(() => {
   (async () => {
     try {
-      const res = await fetch(`/api/issues/forms?stationId=${id}`);
+      const res = await fetch(`${API_URL}/api/issues/forms?stationId=${id}`);
       const data = await res.json();
 
       if (!res.ok || data?.ok !== true || !Array.isArray(data?.issues)) {
@@ -64,7 +64,6 @@ useEffect(() => {
       const drafts=(await db.drafts.toArray())
 
       const dexieSent = new Set( drafts.map(item => {
-        console.log("status",item.status)
         const statusOpen=item.status
         if(statusOpen!=="open") return;
         return String(item.partId);
@@ -76,7 +75,7 @@ useEffect(() => {
       console.error("Dexie error:", err)
       // reset on error
       setSentIssuesToLiveDb(new Set())
-      setSentIssuesToDexie(new Set());   
+      setSentIssuesToDexie(new Set());
       } 
     }
   })();
