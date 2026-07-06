@@ -23,13 +23,10 @@ const hashRounds = 10;
 
 // creating pools for DB connections
 const LIVE_URL =
-  process.env.LIVE_DATABASE_URL ||
-  "postgres://postgres:1234@localhost:5432/secrets";
-
+  process.env.LIVE_DATABASE_URL 
 const OFFLINE_URL =
-  process.env.OFFLINE_DATABASE_URL ||
-  "postgres://postgres:postgres@localhost:5433/maintenance";
-
+  process.env.OFFLINE_DATABASE_URL 
+  
 function makePool(connectionString) {
   return new pg.Pool({
     connectionString,

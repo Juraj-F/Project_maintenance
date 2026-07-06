@@ -273,13 +273,14 @@ console.log("bomItems from admin page ASSYS",assys)
             partId={selectedPart}
             onCancel={handleCancel}
             exportEnabled={canExport}
-             onPendingSaved={(pid) => {
-    setDataDexie(prev => {
-      const next = new Set(prev);
-      next.add(String(pid));
-      return next;
-    });
-  }}
+
+            onPendingSaved={(pid) => {
+              setDataDexie(prev => {
+                const next = new Set(prev);
+                next.add(String(pid));
+                return next;});
+              }}
+              
             onDraftSaved={(id) => {
               // ⭐ Update Set immediately when user presses SAVE
               setSavedDrafts((prev) => {
